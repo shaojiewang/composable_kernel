@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT
-// Copyright (c) 2018-2022, Advanced Micro Devices, Inc. All rights reserved.
+// Copyright (c) 2018-2023, Advanced Micro Devices, Inc. All rights reserved.
 
 #pragma once
 
@@ -14,6 +14,7 @@
 
 #include "ck/library/tensor_operation_instance/device_operation_instance_factory.hpp"
 
+#ifdef DL_KERNELS
 namespace ck {
 namespace tensor_operation {
 namespace device {
@@ -335,3 +336,4 @@ struct DeviceOperationInstanceFactory<ck::tensor_operation::device::DeviceBatche
 } // namespace device
 } // namespace tensor_operation
 } // namespace ck
+#endif
