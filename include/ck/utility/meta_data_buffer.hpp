@@ -2,7 +2,7 @@
 // Copyright (c) 2018-2023, Advanced Micro Devices, Inc. All rights reserved.
 
 #pragma once
-
+#include <cstddef>
 namespace ck {
 
 template <index_t MaxSize>
