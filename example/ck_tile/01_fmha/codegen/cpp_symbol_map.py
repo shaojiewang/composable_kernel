@@ -3,9 +3,9 @@
 # generate kernel instances to speed up compilation
 
 DTYPE_MAP = {
-    "fp16": "ck_tile::fp16_t",
+    # "fp16": "ck_tile::fp16_t",
     "bf16": "ck_tile::bf16_t",
-    "fp8" : "ck_tile::fp8_t"
+    # "fp8" : "ck_tile::fp8_t"
 }
 
 MASK_IMPL = {
@@ -55,19 +55,19 @@ def get_mask_check_map(mask : str):
 
 BIAS_MAP = {
     "no" : "ck_tile::BlockAttentionBiasEnum::NO_BIAS",
-    "bias"  : "ck_tile::BlockAttentionBiasEnum::ELEMENTWISE_BIAS",
-    "alibi" : "ck_tile::BlockAttentionBiasEnum::ALIBI"
+    # "bias"  : "ck_tile::BlockAttentionBiasEnum::ELEMENTWISE_BIAS",
+    # "alibi" : "ck_tile::BlockAttentionBiasEnum::ALIBI"
 }
 
 # TODO: this is ugly
 BIAS_CHECK_MAP = {
     "no" : "bias_enum::no_bias",
-    "bias"  : "bias_enum::elementwise_bias",
-    "alibi" : "bias_enum::alibi"
+    # "bias"  : "bias_enum::elementwise_bias",
+    # "alibi" : "bias_enum::alibi"
 }
 
 MODE_MAP = {
-    "batch" : "false",
+    # "batch" : "false",
     "group" : "true"
 }
 

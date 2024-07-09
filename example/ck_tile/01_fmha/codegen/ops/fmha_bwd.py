@@ -418,12 +418,12 @@ class FmhaBwdDQDKDVKernel:
 def get_fmha_bwd_dq_dk_dv_tile_ppl_dict_from_dtype(dtype : str) -> Optional[dict]:
     if dtype == 'fp16' or dtype == 'bf16':
         return {
-            '32'  : [FmhaBwdDQDKDVTileSize(128, 128, 32, 32, 32, 32, 32,  32,  32, 1, 4, 1, 4, 1, 1, 4, 1, 1, 32, 32, 16, 1),
-                        "qs_ks_vr_dos"],
+            # '32'  : [FmhaBwdDQDKDVTileSize(128, 128, 32, 32, 32, 32, 32,  32,  32, 1, 4, 1, 4, 1, 1, 4, 1, 1, 32, 32, 16, 1),
+            #             "qs_ks_vr_dos"],
             '64'  : [FmhaBwdDQDKDVTileSize( 64, 128, 32, 32, 32, 32, 32,  64,  64, 1, 4, 1, 4, 1, 1, 2, 2, 1, 32, 32, 16, 1),
                         "qs_ks_vr_dos"],
-            '128' : [FmhaBwdDQDKDVTileSize( 64, 128, 32, 32, 32, 32, 32, 128, 128, 1, 4, 1, 4, 1, 1, 2, 2, 1, 32, 32, 16, 1),
-                        "ks_vr"]
+            # '128' : [FmhaBwdDQDKDVTileSize( 64, 128, 32, 32, 32, 32, 32, 128, 128, 1, 4, 1, 4, 1, 1, 2, 2, 1, 32, 32, 16, 1),
+            #             "ks_vr"]
         }
     else:
         return None
@@ -445,6 +445,8 @@ def get_bwd_dq_dk_dv_blobs(kernel_filter : Optional[str], receipt, mask_impl) ->
             if (mode == "group") and (spad == "f" or skpad == "f"):
                 continue
             if ((bias == "no" or bias == "alibi") and dbias == "t"):
+                continue
+            if (dropout == "t"):
                 continue
             k = FmhaBwdDQDKDVKernel(F_idx=0, F_hdim=hdim, F_dtype=dtype, F_tile=tile,
                                 F_spad=spad, F_skpad=skpad, F_dpad=dpad, F_dvpad=dvpad,
