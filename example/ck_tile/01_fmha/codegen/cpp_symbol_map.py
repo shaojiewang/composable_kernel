@@ -3,7 +3,7 @@
 # generate kernel instances to speed up compilation
 
 DTYPE_MAP = {
-    "fp16": "ck_tile::fp16_t",
+    # "fp16": "ck_tile::fp16_t",
     "bf16": "ck_tile::bf16_t",
     "fp8" : "ck_tile::fp8_t"
 }
@@ -15,13 +15,13 @@ MASK_IMPL = {
 
 _MASK_SIMPLIFIED_MAP = {
     "s_no" : "ck_tile::SimplifiedGenericAttentionMask<false>",
-    "s_mask" : "ck_tile::SimplifiedGenericAttentionMask<true>",
+    #"s_mask" : "ck_tile::SimplifiedGenericAttentionMask<true>",
 }
 
 _MASK_MAP = {
     "no" : "FmhaMasks::NoMask",
-    "causal" : "FmhaMasks::CausalMask",
-    "generic" : "FmhaMasks::GenericMask"
+    #"causal" : "FmhaMasks::CausalMask",
+    #"generic" : "FmhaMasks::GenericMask"
 }
 
 def get_mask_map(mask : str):
@@ -35,13 +35,13 @@ def get_mask_map(mask : str):
 
 _MASK_CHECK_MAP = {
     "no" : "t.mask_type == mask_enum::no_mask",
-    "causal" : "t.mask_type == mask_enum::mask_top_left || t.mask_type == mask_enum::mask_bottom_right",
-    "generic" : "t.mask_type == mask_enum::window_generic",
+    #"causal" : "t.mask_type == mask_enum::mask_top_left || t.mask_type == mask_enum::mask_bottom_right",
+    #"generic" : "t.mask_type == mask_enum::window_generic",
 }
 
 _MASK_SIMPLIFIED_CHECK_MAP = {
     "s_no" : "t.mask_type == mask_enum::no_mask",
-    "s_mask" : "t.mask_type != mask_enum::no_mask",
+    #"s_mask" : "t.mask_type != mask_enum::no_mask",
 }
 
 def get_mask_check_map(mask : str):
@@ -55,25 +55,41 @@ def get_mask_check_map(mask : str):
 
 BIAS_MAP = {
     "no" : "ck_tile::BlockAttentionBiasEnum::NO_BIAS",
-    "bias"  : "ck_tile::BlockAttentionBiasEnum::ELEMENTWISE_BIAS",
-    "alibi" : "ck_tile::BlockAttentionBiasEnum::ALIBI"
+    #"bias"  : "ck_tile::BlockAttentionBiasEnum::ELEMENTWISE_BIAS",
+    #"alibi" : "ck_tile::BlockAttentionBiasEnum::ALIBI"
 }
 
 # TODO: this is ugly
 BIAS_CHECK_MAP = {
     "no" : "bias_enum::no_bias",
-    "bias"  : "bias_enum::elementwise_bias",
-    "alibi" : "bias_enum::alibi"
+    #"bias"  : "bias_enum::elementwise_bias",
+    #"alibi" : "bias_enum::alibi"
+}
+
+DROPOUT_MAP = {
+    "no"                        : "ck_tile::BlockDropout<false, true,  false>",
+    #"dropout_wg32"              : "ck_tile::BlockDropout<true,  true,  false>",
+    #"dropout_wg32_storerandval" : "ck_tile::BlockDropout<true,  true,  true >",
+    #"dropout_wg16"              : "ck_tile::BlockDropout<true,  false, false>",
+    #"dropout_wg16_storerandval" : "ck_tile::BlockDropout<true,  false, true >"
+}
+
+DROPOUT_CHECK_MAP = {
+    "no"                        : "t.has_dropout == false",
+    #"dropout_wg32"              : "t.has_dropout == true && t.is_store_randval == false",
+    #"dropout_wg32_storerandval" : "t.has_dropout == true && t.is_store_randval == true",
+    #"dropout_wg16"              : "t.has_dropout == true && t.is_store_randval == false",
+    #"dropout_wg16_storerandval" : "t.has_dropout == true && t.is_store_randval == true",
 }
 
 MODE_MAP = {
-    "batch" : "false",
+    #"batch" : "false",
     "group" : "true"
 }
 
 LAYOUT_MAP = {
     "row" : "true",
-    "col" : "false"
+    #"col" : "false"
 }
 
 PIPELINE_MAP = {
